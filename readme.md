@@ -5,9 +5,7 @@
 
 2. Disable colab settings and enable local.
 
-# ==============================
 # Step 2: Import and Configure
-# ==============================
 
 !pip install python-dotenv
 
