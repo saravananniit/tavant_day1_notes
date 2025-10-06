@@ -1,0 +1,96 @@
+!pip install google-generativeai --quiet
+#  Installs the Google Generative AI library to use Gemini models in Python, quietly without showing logs.
+
+
+import google.generativeai as genai
+# Imports the Gemini API library to access Google’s generative AI models.
+
+import textwrap
+# Imports a utility to format long text outputs neatly (e.g., wrapping responses).
+
+
+import google.generativeai as genai
+# Imports the Gemini API library to use Google’s generative AI models.
+
+!pip install python-dotenv
+# Installs the python-dotenv package to manage environment variables from a .env file.
+
+from dotenv import load_dotenv
+# Loads the function to read environment variables from a .env file.
+
+import os   
+# Imports Python’s built-in module to access system environment variables. 
+
+load_dotenv()
+# Loads all key-value pairs from the .env file into the environment.
+
+API_KEY = os.getenv("GEMINI_API_KEY")
+# Retrieves the Gemini API key from the environment variables.
+
+genai.configure(api_key=API_KEY)
+# Configures the Gemini client with your API key to enable model access.
+
+
+model = genai.GenerativeModel("gemini-2.0-flash")
+# Creates a Gemini model instance using the "gemini-2.0-flash" version for fast responses.
+
+chat = model.start_chat(history=[])
+# Starts a new chat session with an empty history to maintain context across turns.
+
+
+def pretty_print(text):
+    print("\n".join(textwrap.wrap(text, width=100)))
+# Neatly formats and prints long text by wrapping it to 100 characters per line for better readability.
+
+
+print(" Gemini Chatbot with Memory & State")
+# Displays the chatbot title indicating it remembers past messages.
+
+print("Type 'exit' to stop.\n")
+# Informs the user how to end the chat.
+
+while True:
+# Starts an infinite loop to keep the chatbot running.
+
+    user_input = input("You: ")
+# Takes user input from the console.
+
+
+    if user_input.lower() in ["exit", "quit", "bye"]:
+# Checks if the user wants to exit the chat.
+
+        print("Bot: Goodbye! ")
+# Prints a farewell message.
+
+        break
+# Ends the chat loop.
+
+    response = chat.send_message(user_input)
+# Sends the user message to Gemini and gets a response with context.
+
+    bot_reply = response.text
+# Extracts the text reply from the Gemini response.
+
+
+    print("Bot:", end=" ")
+# Prepares to print the bot's reply.
+
+
+    pretty_print(bot_reply)
+# Neatly prints the bot's reply with line wrapping.
+
+    # Debug: Show memory state
+    print("\n[Memory State So Far]")
+# Displays the chat history for debugging or learning purposes.
+
+    for turn in chat.history:
+      role = turn.role
+    # parts is a list of Part objects, so we join their text
+      parts_text = " ".join([p.text for p in turn.parts if hasattr(p, "text")])
+
+# Loops through each chat turn and prints who said what.
+
+    print(f"{role}: {parts_text}")
+    print("-" * 60)
+
+# Prints a separator line for clarity.

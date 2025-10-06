@@ -1,0 +1,84 @@
+!pip install google-generativeai --quiet
+
+
+pip install: Downloads and installs the package from Python’s package index.
+google-generativeai: The name of the library that provides access to Google's generative AI capabilities.
+--quiet: Suppresses the usual installation messages to keep the output clean.
+pip install: Downloads and installs the package from Python’s package index.
+google-generativeai: The name of the library that provides access to Google's generative AI capabilities.
+--quiet: Suppresses the usual installation messages to keep the output clean.
+
+pip install is a command-line instruction, not native Python code.
+By adding ! before it (!pip install), you're telling the notebook:
+
+"Run this as a shell command, not as Python code."
+
+If you're building AI-powered apps or demos using Google's Gemini models, this library is your gateway. It helps you send prompts, get responses, and integrate generative AI into your Python workflows—especially useful in LangChain, agentic AI, or chatbot projects.
+
+----------------------------------------------------------------------------------------------------------------
+
+!pip install python-dotenv
+
+
+This command installs the python-dotenv library, which helps your Python app load environment variables from a .env file.
+
+! tells the notebook to run a shell command.
+pip install: Installs a Python package.
+python-dotenv: The package that reads key-value pairs from .env files and loads them into your environment.
+
+
+In real-world projects, we often store API keys, secrets, and config values in a .env file to keep them secure and separate from the code.
+python-dotenv makes it easy to access these values in Python using os.getenv()—especially useful in AI, cloud, and web apps.
+
+----------------------------------------------------------------------------------------------------------------
+
+from dotenv import load_dotenv
+# Imports the function to load environment variables from a .env file.
+
+import os   
+# Imports Python’s built-in module to access environment variables.
+
+load_dotenv()
+
+#Loads the variables defined in the .env file into the environment.
+
+API_KEY = os.getenv("GEMINI_API_KEY")
+
+#Gets the Gemini API key from the environment variables.
+
+genai.configure(api_key=API_KEY)
+
+# Configures the Gemini client with your API key for authentication.
+--------------------------------------------------------------------------------------------------------------------
+
+model = genai.GenerativeModel("gemini-2.0-flash")
+
+#  Creates a Gemini model instance (gemini-2.0-flash) to generate AI responses using Google's generative AI.
+
+
+---------------------------------------------------------------------------------------------------------------------
+
+print(" Simple Gemini Chatbot")
+print("Type 'exit' to stop.\n")
+
+while True:
+# Starts an infinite loop to keep the chatbot running.
+
+    user_input = input("You: ")
+#Takes user input from the console.
+
+    if user_input.lower() in ["exit", "quit", "bye"]:
+#Checks if the user wants to end the chat.
+
+        print("Bot: Goodbye! ")
+#Prints a goodbye message.
+
+        break
+# Exits the loop and stops the chatbot.
+
+    response = model.generate_content(user_input)
+#Sends the user input to Gemini and gets a response.
+
+    print("Bot:", response.text)
+#Displays the Gemini model's reply to the user.
+----------------------------------------------------------------------------------------------------------------------
